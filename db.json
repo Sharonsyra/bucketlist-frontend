@@ -1,0 +1,16 @@
+{
+  "buckets": [
+    {
+      "id": 1,
+      "name": "Read SitePoint article"
+    },
+    {
+      "id": 2,
+      "name": "Clean inbox"
+    },
+    {
+      "id": 3,
+      "name": "Make restaurant reservation"
+    }
+  ]
+} 

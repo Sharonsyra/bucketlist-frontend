@@ -1,0 +1,9 @@
+  <section class="main" *ngIf="bukcets.length > 0">
+    <ul class="bucket-list">
+      <li *ngFor="let bucket of buckets">
+        <app-bucket-list-item
+        [bucket]="bucket"
+        (remove)="onRemoveBucket($event)"></app-bucket-list-item>
+      </li>
+    </ul>
+  </section>
