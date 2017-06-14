@@ -1,11 +1,6 @@
 <section class="bucketapp">
 
-<app-bucket-list-header (add)="onAddBucket($event)"></app-bucket-list-header>
-
-
-  <app-bucket-list [buckets]="buckets"
-                 (remove)="onRemoveBucket($event)"></app-bucket-list>
-
-  <app-bucket-list-footer [buckets]="buckets"></app-bucket-list-footer>
+  <router-outlet></router-outlet>
 
 </section>
+

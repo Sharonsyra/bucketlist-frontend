@@ -3,7 +3,10 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
-import {Bucket} from './bucket';
+
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { BucketService } from './bucket-list/bucket.service';
+import { ApiService } from './api.service';
 
 describe('AppComponent', () => {
   beforeEach(() => {
@@ -14,19 +17,21 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent
       ],
-    });
+      providers: [
+        BucketService,
+        {
+          provide: ApiService        }
+      ],
+      schemas: [
+        NO_ERRORS_SCHEMA
+      ]
+    }).compileComponents();
   });
 
   it('should create the app', async(() => {
-    let fixture = TestBed.createComponent(AppComponent);
-    let app = fixture.debugElement.componentInstance;
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
-  }));
-
-  it(`should have a newBucket bucket`, async(() => {
-    let fixture = TestBed.createComponent(AppComponent);
-    let app = fixture.debugElement.componentInstance;
-    expect(app.newBucket instanceof Bucket).toBeTruthy()
-  }));
+  })); 
 
 });

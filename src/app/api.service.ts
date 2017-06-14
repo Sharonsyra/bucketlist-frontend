@@ -1,38 +1,63 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
-import { Http, Response } from '@angular/http';
-import {Bucket} from './bucket';
+import { Http, Response, Headers } from '@angular/http';
+import {Bucket} from './bucket-list/bucket';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
-const API_URL = environment.apiUrl;
-
 @Injectable()
 export class ApiService {
-
+    headers : any;
   constructor(
     private http: Http
   ) {
+      this.headers = new Headers();
+      this.headers.append('Authorization', "Basic eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0OTc0MjEyNjIsImlhdCI6MTQ5NzQxNDA2Miwic3ViIjoxfQ.YqYZKKncPVzpuSaiQaLTy0qoC-ZnFFiZbOP-krK5cDI")
+      this.headers.append('Access-Control-Allow-Origin', '*')
+      this.headers.append('Content-Type', 'application/json')
   }
 
   // API: GET /buckets
   public getAllBuckets() {
   	return this.http
-    .get(API_URL + '/buckets')
+    .get("http://127.0.0.1:5000/api/v1.0/bucketlists/", {"headers" : this.headers})
     .map(response => {
       const buckets = response.json();
-      return buckets.map((bucket) => new Bucket(bucket));
+      return buckets.bucketlists;
     })
     .catch(this.handleError);
   }
 
+  //API: GET /page
+  public getNext(){
+    return this.http
+    .get("http://127.0.0.1:5000/api/v1.0/bucketlists/", {"headers" : this.headers})
+    .map(response => {
+      const buckets = response.json();
+      return buckets.bucketlists.nextpage;
+    })
+    .catch(this.handleError);
+  }
+
+  //API: GET /page
+  public getPrevious(){
+    return this.http
+    .get("http://127.0.0.1:5000/api/v1.0/bucketlists/", {"headers" : this.headers})
+    .map(response => {
+      const buckets = response.json();
+      return buckets.bucketlists.previouspage;
+    })
+    .catch(this.handleError);
+  }
+ 
+
   // API: POST /buckets
-  public createBucket(bucket: Bucket): Observable<Bucket> {
+  public createBucket(name) {
   return this.http
-    .post(API_URL + '/buckets', bucket)
+    .post("http://127.0.0.1:5000/api/v1.0/bucketlists/", JSON.stringify({"name": name}), {"headers" : this.headers})
     .map(response => {
       return new Bucket(response.json());
     })
@@ -40,9 +65,9 @@ export class ApiService {
   }
 
   // API: GET /buckets/:id
-public getBucketById(bucketId: number): Observable<Bucket> {
+  public getBucketById(bucketId){
     return this.http
-    .get(API_URL + '/buckets/' + bucketId)
+    .get("http://127.0.0.1:5000/api/v1.0/bucketlists/" + <string>bucketId)
     .map(response => {
       return new Bucket(response.json());
     })
@@ -51,9 +76,9 @@ public getBucketById(bucketId: number): Observable<Bucket> {
   }
 
   // API: PUT /buckets/:id
-  public updateBucket(bucket: Bucket): Observable<Bucket> {
+  public updateBucket(name, bucketId){
   return this.http
-    .put(API_URL + '/buckets/' + bucket.id, bucket)
+    .put("http://127.0.0.1:5000/api/v1.0/bucketlists/" + <string>bucketId, JSON.stringify({"name": name}), {"headers" : this.headers})
     .map(response => {
       return new Bucket(response.json());
     })
@@ -61,9 +86,9 @@ public getBucketById(bucketId: number): Observable<Bucket> {
   }
 
   // DELETE /buckets/:id
-  public deleteBucketById(bucketId: number): Observable<null> {
+  public deleteBucketById(bucketId){
   return this.http
-    .delete(API_URL + '/buckets/' + bucketId)
+    .delete("http://127.0.0.1:5000/api/v1.0/bucketlists/" + <string>bucketId, {"headers" : this.headers})
     .map(response => null)
     .catch(this.handleError);
   }

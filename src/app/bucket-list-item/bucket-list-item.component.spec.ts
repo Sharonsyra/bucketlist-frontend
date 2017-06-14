@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { DebugElement } from '@angular/core';
 
 import { BucketListItemComponent } from './bucket-list-item.component';
+import {Bucket} from '../bucket-list/bucket';
 
 describe('BucketListItemComponent', () => {
   let component: BucketListItemComponent;
@@ -16,10 +19,11 @@ describe('BucketListItemComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(BucketListItemComponent);
     component = fixture.componentInstance;
+    component.bucket = new Bucket({ id: 1, name: 'Test' });
     fixture.detectChanges();
   });
 
-  it('should be created', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });
