@@ -1,3 +1,27 @@
-<p>
-  user works!
-</p>
+<section>
+	<h4>{{userMode}}</h4>
+	<form (ngSubmit)="onRegister(email, password)" *ngIf="userMode=='Register'">
+		<label>Email:</label>
+		<input type="email" name="email" [(ngModel)]="email"><br>
+		<label>Password:</label>
+		<input id="icon_prefix" type="Password" name="password" [(ngModel)]="password"><br>
+
+		<p>{{message}}</p>
+
+		<button class="submit"> Submit </button>	
+	</form>
+
+	<form (ngSubmit)="onLogin(email, password)" *ngIf="userMode=='Login'">
+		<label>Email:</label>
+		<input type="email" name="email" [(ngModel)]="email"><br>
+		<label>Password:</label>
+		<input type="Password" name="password" [(ngModel)]="password"><br>
+	    
+	    <p>{{message}}</p>
+		
+		<button class="submit"> Submit </button>	
+	</form>
+
+	<button class="update" (click)="onToggle()">{{buttonValue}}</button>
+
+</section>

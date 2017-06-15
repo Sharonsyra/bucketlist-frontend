@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import {Bucket} from '../bucket-list/bucket';
+import {Item} from '../bucket-list-item/item';
+import { ItemService } from './item.service';
 
 @Component({
   selector: 'app-bucket-list-item',
@@ -8,25 +9,56 @@ import {Bucket} from '../bucket-list/bucket';
 })
 export class BucketListItemComponent {
   
-  @Input() bucket: Bucket;
+  editMode : boolean = false;
 
-  @Output()
-  update: EventEmitter<Bucket> = new EventEmitter();
-
-  @Output()
-  remove: EventEmitter<Bucket> = new EventEmitter();
-
-  constructor() { }
-
-  ngOnInit() {
-  }
+  name : string = "";
   
-   updateBucket(bucket: Bucket) {
-    this.update.emit(bucket)
+  items: Item[] = [];
+
+  editName: string = "";
+
+  constructor(private itemService: ItemService) {
+  }  
+
+  ngOnInit(bucketId) {
+    this.itemService.getAllItems(bucketId).subscribe(response => {
+      if(response){
+        this.items = response
+      }
+    });
   }
 
-   removeBucket(bucket: Bucket) {
-    this.remove.emit(bucket);
+  onAddItem(name, bucketId) {
+    if (name){
+      this.itemService
+      .addItem(name, bucketId)
+      .subscribe(
+        (newItem) => {
+          this.items = this.items.concat(newItem);
+        }
+      );
+    }
+    }
+
+  onUpdateBucket(name, bucketId, itemId) {
+    this.itemService
+      .updateBucket(name, bucketId, itemId)
+      .subscribe(
+        (updateBucket) => {
+          let item = this.items.filter((t) => t.id == itemId)[0];
+          item.name = name
+        }
+      );
   }
 
-}
+  onRemoveBucket(bucketId, itemId) {
+    this.itemService
+      .deleteItemById(bucketId, itemId)
+      .subscribe(
+        (_) => {
+          this.items = this.items.filter((t) => t.id !== itemId);
+        }
+      );
+  }
+
+  }

@@ -1,22 +1,26 @@
   <header>
-    <div>
-      <h1>BucketLists</h1>
+    <div class="header">
+      <nav class="brown">
+          <ul class="right nav nav-pills pull-right">
+              <button (click)="logOut()">LogOut</button>                 
+          </ul>
+      </nav>
+      <h3 class="text-muted center">Bucketee</h3>
     </div>
   </header> 
 
   <div>
-    <label>New</label><br>
+    <label>New Bucket</label><br>
    	<input [(ngModel)] = "name">
     <button class="create" (click)="onAddBucket(name)">Submit</button>
   </div>
-
+  <div class="container">
   <section class="main" *ngIf="buckets.length > 0">
     <ul class="bucket-list">
-      <li *ngFor="let bucket of buckets">
-
         <div class="row">
-        <div class="col s12 m6">
-          <div class="card blue-grey darken-1">
+        <li *ngFor="let bucket of buckets">
+        <div class="col s12 m6 l4">
+          <div class="card brown">
             <div class="card-content white-text">
               <span class="card-title">{{bucket.name}}</span>
             </div>
@@ -24,42 +28,41 @@
               <span>
                 <ul class="items">
                   <li *ngFor="let item of items">
-                    <label>{{bucket.items}}</label>
-                      <input class="update" [(ngModel)] = "editName" *ngIf="editMode">
-                      <button class="update"  *ngIf="!editMode" (click)="editMode=true;">Edit</button>
-                      <button class="update"  *ngIf="editMode" (click)="onUpdateBucket(editName, bucket.id)"> Submit </button>
-                      <button class="destroy" (click)="onRemoveBucket(bucket.id)">Delete</button>
+                    <h4>{{bucket.items["name"]}}</h4>
+                    <label>{{item.name}}</label>
+                    <input class="update" [(ngModel)] = "editName" *ngIf="editMode">
+                    <button class="update"  *ngIf="!editMode" (click)="editMode=true">Edit</button>
+                    <button class="update"  *ngIf="editMode" (click)="onUpdateBucket(editName, bucket.id)"> Submit </button>
+                    <button class="destroy" (click)="onRemoveBucket(bucket.id)">Delete</button>
                   </li>
                 </ul>
+                <label>{{bucket.date_created}}</label><br>
+                <label>{{bucket.date_modified}}</label>
               </span>
             </div>
             <div class="card-action">
                 <input class="update" [(ngModel)] = "editName" *ngIf="editMode">
                 <button class="update"  *ngIf="!editMode" (click)="editMode=true;">Edit</button>
                 <button class="update"  *ngIf="editMode" (click)="onUpdateBucket(editName, bucket.id)"> Submit </button>
-                <button class="destroy" (click)="onRemoveBucket(bucket.id)">Delete</button>
+                <button class="destroy right" (click)="onRemoveBucket(bucket.id)">Delete</button>
             </div>
           </div>
         </div>
-      </div>
-            
-
-
-<!--       <div class="card">
-  		  <label>{{bucket.name}}</label>
-  		  <input class="update" [(ngModel)] = "editName" *ngIf="editMode">
-  		  <button class="update"  *ngIf="!editMode" (click)="editMode=true;">Edit</button>
-  		  <button class="update"  *ngIf="editMode" (click)="onUpdateBucket(editName, bucket.id)"> Submit </button>
-  		  <button class="destroy" (click)="onRemoveBucket(bucket.id)">Delete</button>
-	    </div> -->
       </li>
+      </div>            
     </ul>
   </section>
+  </div>
         
-<footer>
-    <div>
-    <button class="previous" (click)="onPrevious()">Previous</button>
-    <button class="next" (click)="onNext()">Next</button>
+<footer class="page-footer brown">
+  <div class="container">
+    <button class="previous" (click)="onPrevious()"><i class="material-icons">skip_previous</i></button>
+    <button class="next right" (click)="onNext()"><i class="material-icons">skip_next</i></button>
+  </div>
+  <div class="footer-copywright">
+    <div class="container">
+    © 2014 Copyright Text
+    </div>
   </div>
 </footer>
 

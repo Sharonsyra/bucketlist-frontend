@@ -1,2 +1,17 @@
+<div class="view">
+  <input class="toggle" type="checkbox" (click)="toggleTodoComplete(todo)" [checked]="todo.complete">
+  <label>{{todo.title}}</label>
+  <button class="destroy" (click)="removeTodo(todo)"></button>
+</div>
 
 
+<ul class="items">
+  <li *ngFor="let item of items">
+    <h4>{{item.items}}</h4>
+    <label>{{item.name}}</label>
+    <input class="update" [(ngModel)] = "editName" *ngIf="editMode&&bucket.id==selectedId">
+    <button class="update"  *ngIf="!editMode" (click)="editMode=true;selectedId=bucket.id">Edit</button>
+    <button class="update"  *ngIf="editMode&&bucket.id==selectedId" (click)="onUpdateBucket(editName, bucket.id)"> Submit </button>
+    <button class="destroy" (click)="onRemoveBucket(bucket.id)">Delete</button>
+  </li>
+</ul>

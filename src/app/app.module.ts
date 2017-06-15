@@ -26,7 +26,7 @@ import { UserComponent } from './user/user.component';
     HttpModule,
     RouterModule.forRoot([
       { path: 'bucketlists', component: BucketListComponent },
-      { path: 'auth', component: UserComponent},
+      { path: 'users', component: UserComponent},
       { path: '', redirectTo: 'bucketlists', pathMatch: 'full' }
       ])
   ],

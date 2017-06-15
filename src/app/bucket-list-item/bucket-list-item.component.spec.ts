@@ -3,7 +3,7 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { BucketListItemComponent } from './bucket-list-item.component';
-import {Bucket} from '../bucket-list/bucket';
+import {Item} from '../bucket-list-item/item';
 
 describe('BucketListItemComponent', () => {
   let component: BucketListItemComponent;
@@ -19,7 +19,7 @@ describe('BucketListItemComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(BucketListItemComponent);
     component = fixture.componentInstance;
-    component.bucket = new Bucket({ id: 1, name: 'Test' });
+    component.items = [new Item({ id: 1, name: 'Test' })];
     fixture.detectChanges();
   });
 

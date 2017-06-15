@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from '@angular/router'
+
+import {User} from './user';
 import { UserService } from './user.service';
 
 @Component({
@@ -9,14 +12,60 @@ import { UserService } from './user.service';
 })
 export class UserComponent implements OnInit {
 
-	title: string;
+  users = [];
+
+  message: string = "";
+
+  email: string = "";
+
+  password: string = "";
+
+  userMode: string = "Register";
+
+  buttonValue: string = "login"
 	
-	constructor(private userService: UserService) {
+	constructor(private userService: UserService, private router: Router) {
 
 	}
 
   ngOnInit() {
-        this.title = this.userService.greeting();
+
+  }
+
+  onRegister(email, password){
+    if(email){
+      this.users.forEach(user => {
+          if (user.email === email) {
+            alert('User already exists!');
+          }
+        });
+    if(password.length < 6){
+      alert('Password should be at least six characters!')
+    }
+    this.userService.register(email, password)
+    .subscribe(response => {
+      if(response){
+        this.users = response
+        this.onLogin(this.email, this.password)
+      }
+    });
+    }
+  }
+
+  onLogin(email, password){
+    this.userService.login(email, password)
+    .subscribe(response => {
+      this.message = response.json()['message']
+      if(response.json()['access_token']){
+        localStorage.setItem('token', response.json()['access_token'])
+        this.router.navigate(["/bucketlists"])
+      }
+    });
+  }
+
+  onToggle(){
+    this.buttonValue = this.buttonValue == "login"? "register": "login";
+    this.userMode = this.userMode == "Register"? "Login": "Register";
   }
 
 }

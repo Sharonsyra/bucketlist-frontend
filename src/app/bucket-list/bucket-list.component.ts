@@ -1,5 +1,10 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import {Router} from '@angular/router'
+
 import {Bucket} from './bucket';
+import {Item} from '../bucket-list-item/item';
+import {ItemService} from '../bucket-list-item/item.service'
+
 import { BucketService } from './bucket.service';
 
 @Component({
@@ -12,37 +17,57 @@ export class BucketListComponent implements OnInit{
   
   editMode : boolean = false;
 
+  selectedId : number;
+    
   name : string = "";
   
   nexturl : string = "";
 
   previousurl : string = "";
 
-  buckets: Bucket[] = [];
+  buckets = [];
 
   editName: string = "";
 
-  constructor(private bucketService: BucketService) {
+  items: Item[] = [];
+
+  token: string = ""
+
+  constructor(private bucketService: BucketService, private router: Router) {
   }  
 
   ngOnInit() {
-    this.bucketService.getAllBuckets().subscribe(response => {
-      if(response){
-        this.buckets = response
-        console.log(response)
+      this.token = localStorage.getItem("token")
+      if (this.token) {
+        this.bucketService.getAllBuckets().subscribe(response => {
+        if(response){
+          this.buckets = response
       }
-    });
-  }
+    });     
+    }
+     else{
+        this.router.navigate(["/users"])
+     }
+    }
 
   onAddBucket(name) {
-    if (name){
+      if (name){
+        this.buckets.forEach(bucketlist => {
+          if (bucketlist.name === name) {
+            alert('Bucketlist already exists!');
+          }
+        });
       this.bucketService
       .addBucket(name)
       .subscribe(
         (newBucket) => {
-          this.buckets = this.buckets.concat(newBucket);
+          if (newBucket) {
+            this.buckets = this.buckets.concat(newBucket);
+          } else {
+            console.log('error');
+          }
         }
-      );
+      )
     }
     }
 
@@ -50,46 +75,52 @@ export class BucketListComponent implements OnInit{
     this.bucketService.getBucketById(bucketId).subscribe(
       (singleBucket) => {
         let bucket = this.buckets.filter((t) => t.id == bucketId)[0];
-        console.log(Bucket)
       })
-  }
+    }
 
   onUpdateBucket(name, bucketId) {
-    this.bucketService
+      this.bucketService
       .updateBucket(name, bucketId)
       .subscribe(
         (updateBucket) => {
           let bucket = this.buckets.filter((t) => t.id == bucketId)[0];
           bucket.name = name
+          this.editMode = false;
         }
       );
-  }
+    }
 
   onRemoveBucket(bucketId) {
-    this.bucketService
+      this.bucketService
       .deleteBucketById(bucketId)
       .subscribe(
         (_) => {
           this.buckets = this.buckets.filter((t) => t.id !== bucketId);
         }
       );
-  }
+    }
 
   onNext(){
-      this.bucketService.getNext().subscribe(response  => {
+        this.bucketService.getNext().subscribe(response  => {
         if(response){
           this.buckets = response
         }
       });
-  }
+      }
 
   onPrevious(){
-      this.bucketService.getPrevious().subscribe(response  => {
-      if(response){
-        this.buckets = response
+        this.bucketService.getPrevious().subscribe(response  => {
+        if(response){
+          this.buckets = response
       }
     });
-  }
+      }
 
+  logOut(): void {
+      this.token = null;
+      localStorage.removeItem("token");
+      this.router.navigate(['users']);
+    }
+ 
 }
 

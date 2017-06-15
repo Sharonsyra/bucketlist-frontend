@@ -11,37 +11,37 @@ export class BucketService {
     ) {
     }
 
-  // Simulate POST /buckets
+  // Simulate POST /bucketlists
   addBucket(name) {
     return this.api.createBucket(name);
   }
 
-  // Simulate DELETE /buckets/:id
+  // Simulate DELETE /bucketlists/:id
   deleteBucketById(bucketId) {
     return this.api.deleteBucketById(bucketId);
   }
 
-  // Simulate PUT /buckets/:id
+  // Simulate PUT /bucketlists/:id
   updateBucket(name, bucketId) {
     return this.api.updateBucket(name, bucketId);
   }
 
-  // Simulate GET /buckets
+  // Simulate GET /bucketlists
   getAllBuckets(): Observable<Bucket[]> {
     return this.api.getAllBuckets();
   }
 
-  // Simulate GET /nextpage
+  // Simulate GET /bucketlists
   getNext(): Observable<Bucket[]> {
     return this.api.getNext();
   }
 
-  // Simulate GET /previouspage
+  // Simulate GET /bucketlists
   getPrevious(): Observable<Bucket[]> {
     return this.api.getPrevious();
   }
 
-  // Simulate GET /buckets/:id
+  // Simulate GET /bucketlists/:id
   getBucketById(bucketId): Observable<Bucket> {
     return this.api.getBucketById(bucketId);
   }
