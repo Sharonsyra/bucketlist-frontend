@@ -1,27 +1,80 @@
+  <header>
+    <div class="nav-wrapper">
+      <nav class="blue">
+      <ul class="right">
+      <li>
+          <a class="waves-effect waves-light btn cyan" (click)="onHome()">Home</a>
+      </li>
+      <li>
+          <a class="waves-effect waves-light btn cyan" (click)="onToggle()">{{buttonValue}}</a>
+      </li>
+      </ul>
+      </nav>
+      <h3 class="text-muted center">Bucketee</h3>
+    </div>
+  </header> 
+
 <section>
 	<h4>{{userMode}}</h4>
-	<form (ngSubmit)="onRegister(email, password)" *ngIf="userMode=='Register'">
+	<form class="col s12" (ngSubmit)="onRegister(email, password)" *ngIf="userMode=='Register'">
+		<div class="row">
+        <div class="input-field col s6">
 		<label>Email:</label>
-		<input type="email" name="email" [(ngModel)]="email"><br>
-		<label>Password:</label>
-		<input id="icon_prefix" type="Password" name="password" [(ngModel)]="password"><br>
+		<input type="email" name="email" [(ngModel)]="email">
+		</div>
+		</div>
+		<div class="row">
+		<div class="input-field col s6">
+		<label>Password:</label><br>
+		<input id="icon_prefix" type="Password" name="password" [(ngModel)]="password">
 
 		<p>{{message}}</p>
-
-		<button class="submit"> Submit </button>	
+		</div>
+		</div>
+		<div>
+		<button class="submit"> Submit </button>
+		</div>
 	</form>
 
 	<form (ngSubmit)="onLogin(email, password)" *ngIf="userMode=='Login'">
+	    <div class="row">
+        <div class="input-field col s6">
 		<label>Email:</label>
-		<input type="email" name="email" [(ngModel)]="email"><br>
+		<input type="email" name="email" [(ngModel)]="email">
+		</div>
+		</div>
+		<div class="row">
+        <div class="input-field col s6">
 		<label>Password:</label>
-		<input type="Password" name="password" [(ngModel)]="password"><br>
+		<input type="Password" name="password" [(ngModel)]="password">
 	    
 	    <p>{{message}}</p>
-		
-		<button class="submit"> Submit </button>	
+	    </div>
+	    </div>
+        <div class="input-field col s6">
+		<button class="submit cyan"> Submit </button>	
+		</div>
 	</form>
-
-	<button class="update" (click)="onToggle()">{{buttonValue}}</button>
-
 </section>
+
+
+<footer class="page-footer blue">
+   <div class="container">
+	  <div class="row">
+	    <div class="col l6 s12">
+	      <h5 class="white-text"> Details </h5>
+	      <p class="grey-text text-lighten-4">
+	        More awesome details about Bucketee
+	      </p>
+	    </div>
+	    <div class="col l4 offset-12 s12">
+	      <h5 class="white-text"> Links </h5>
+	    </div>
+	  </div>
+  </div>
+  <div class="footer-copywright">
+    <div class="container">
+    © 2017 Copyright Text
+    </div>
+  </div>
+</footer>

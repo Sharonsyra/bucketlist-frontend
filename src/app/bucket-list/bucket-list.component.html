@@ -1,9 +1,14 @@
   <header>
-    <div class="header">
-      <nav class="brown">
-          <ul class="right nav nav-pills pull-right">
-              <button (click)="logOut()">LogOut</button>                 
-          </ul>
+    <div class="nav-wrapper">
+      <nav class="blue">
+          <form>
+            <div class="input-field">
+              <input id="search" type="search" required>
+              <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+              <i class="material-icons">close</i>
+            </div>
+          </form>
+          <a class="waves-effect waves-light btn right cyan" (click)="logOut()">LogOut</a>
       </nav>
       <h3 class="text-muted center">Bucketee</h3>
     </div>
@@ -12,56 +17,81 @@
   <div>
     <label>New Bucket</label><br>
    	<input [(ngModel)] = "name">
-    <button class="create" (click)="onAddBucket(name)">Submit</button>
+    <button class="create cyan" (click)="onAddBucket(name)">Submit</button>
   </div>
   <div class="container">
   <section class="main" *ngIf="buckets.length > 0">
     <ul class="bucket-list">
         <div class="row">
         <li *ngFor="let bucket of buckets">
-        <div class="col s12 m6 l4">
-          <div class="card brown">
-            <div class="card-content white-text">
+        <a href="" (click)="onGetBucket(bucket.id)">
+        <div class="col s12 m6 l8">
+          <div class="card">
+            <div class="card-content black-text">
               <span class="card-title">{{bucket.name}}</span>
             </div>
-            <div class="card-content">
+            <div class="card-action">
+              <button class="destroy right">Delete</button>
+              <button class="update right">Edit</button>
+            </div>
+            <!-- <div class="card-content">
               <span>
                 <ul class="items">
-                  <li *ngFor="let item of items">
-                    <h4>{{bucket.items["name"]}}</h4>
-                    <label>{{item.name}}</label>
-                    <input class="update" [(ngModel)] = "editName" *ngIf="editMode">
-                    <button class="update"  *ngIf="!editMode" (click)="editMode=true">Edit</button>
-                    <button class="update"  *ngIf="editMode" (click)="onUpdateBucket(editName, bucket.id)"> Submit </button>
-                    <button class="destroy" (click)="onRemoveBucket(bucket.id)">Delete</button>
+                  <h4 class="red-text darken-4"><button (click)="onGetBucket">Items</button></h4>
+                  <li *ngFor="let item of bucket.items">
+                    <label class="red-text">{{item.name}}</label>
                   </li>
                 </ul>
-                <label>{{bucket.date_created}}</label><br>
-                <label>{{bucket.date_modified}}</label>
+                <label class="">{{bucket.date_created}}</label><br>
+                <label class="">{{bucket.date_modified}}</label>
               </span>
             </div>
             <div class="card-action">
-                <input class="update" [(ngModel)] = "editName" *ngIf="editMode">
+                <input class="update" [(ngModel)] = "editName" *ngIf="editMode&&selectedId">
                 <button class="update"  *ngIf="!editMode" (click)="editMode=true;">Edit</button>
                 <button class="update"  *ngIf="editMode" (click)="onUpdateBucket(editName, bucket.id)"> Submit </button>
                 <button class="destroy right" (click)="onRemoveBucket(bucket.id)">Delete</button>
-            </div>
+            </div> -->
           </div>
         </div>
+      </a>
       </li>
       </div>            
     </ul>
   </section>
   </div>
         
-<footer class="page-footer brown">
   <div class="container">
-    <button class="previous" (click)="onPrevious()"><i class="material-icons">skip_previous</i></button>
-    <button class="next right" (click)="onNext()"><i class="material-icons">skip_next</i></button>
+  <ul class="pagination">
+    <li class="disabled">
+    <a class="waves-effect waves-light btn cyan" (click)="onPrevious()">
+    <i class="material-icons">chevron_left</i></a></li>
+    <li class="active"><a href="#!">1</a></li>
+    <li class="waves-effect"><a href="#!">2</a></li>
+    <li class="waves-effect"><a href="#!">3</a></li>
+    <li>
+    <a class="waves-effect waves-light btn cyan" (click)="onNext()">
+    <i class="material-icons">chevron_right</i></a></li>
+  </ul>
+  </div>
+
+<footer class="page-footer blue">
+  <div class="container">
+    <div class="row">
+      <div class="col l6 s12">
+        <h5 class="white-text"> Details </h5>
+        <p class="grey-text text-lighten-4">
+          More awesome details about Bucketee
+        </p>
+      </div>
+      <div class="col l4 offset-12 s12">
+        <h5 class="white-text"> Links </h5>
+      </div>
+    </div>
   </div>
   <div class="footer-copywright">
     <div class="container">
-    © 2014 Copyright Text
+    © 2017 Copyright Text
     </div>
   </div>
 </footer>

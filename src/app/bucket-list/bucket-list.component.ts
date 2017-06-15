@@ -18,7 +18,7 @@ export class BucketListComponent implements OnInit{
   editMode : boolean = false;
 
   selectedId : number;
-    
+
   name : string = "";
   
   nexturl : string = "";
@@ -37,8 +37,8 @@ export class BucketListComponent implements OnInit{
   }  
 
   ngOnInit() {
-      this.token = localStorage.getItem("token")
-      if (this.token) {
+    this.token = localStorage.getItem("token")
+    if (this.token) {
         this.bucketService.getAllBuckets().subscribe(response => {
         if(response){
           this.buckets = response
@@ -86,6 +86,7 @@ export class BucketListComponent implements OnInit{
           let bucket = this.buckets.filter((t) => t.id == bucketId)[0];
           bucket.name = name
           this.editMode = false;
+          this.selectedId = bucketId;
         }
       );
     }

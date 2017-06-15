@@ -33,24 +33,19 @@ export class UserComponent implements OnInit {
   }
 
   onRegister(email, password){
-    if(email){
-      this.users.forEach(user => {
-          if (user.email === email) {
-            alert('User already exists!');
-          }
-        });
     if(password.length < 6){
       alert('Password should be at least six characters!')
     }
     this.userService.register(email, password)
     .subscribe(response => {
+      this.message = response.json()['message']
+      alert(this.message)
       if(response){
         this.users = response
         this.onLogin(this.email, this.password)
       }
     });
     }
-  }
 
   onLogin(email, password){
     this.userService.login(email, password)
@@ -61,6 +56,10 @@ export class UserComponent implements OnInit {
         this.router.navigate(["/bucketlists"])
       }
     });
+  }
+
+  onHome(){
+        this.router.navigate([""])
   }
 
   onToggle(){

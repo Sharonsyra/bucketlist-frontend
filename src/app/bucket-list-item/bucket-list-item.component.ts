@@ -1,4 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {Router} from '@angular/router'
+
 import {Item} from '../bucket-list-item/item';
 import { ItemService } from './item.service';
 
@@ -17,15 +19,23 @@ export class BucketListItemComponent {
 
   editName: string = "";
 
-  constructor(private itemService: ItemService) {
+  token: string = ""
+
+  constructor(private itemService: ItemService, private router: Router) {
   }  
 
   ngOnInit(bucketId) {
-    this.itemService.getAllItems(bucketId).subscribe(response => {
+    this.token = localStorage.getItem("token")
+    if(this.token){
+      this.itemService.getAllItems(bucketId).subscribe(response => {
       if(response){
         this.items = response
       }
     });
+    }
+    else{
+      this.router.navigate(["/users"])
+    }
   }
 
   onAddItem(name, bucketId) {
