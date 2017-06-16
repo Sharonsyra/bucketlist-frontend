@@ -32,6 +32,11 @@ export class BucketService {
   }
 
   // Simulate GET /bucketlists
+  getSearch(): Observable<Bucket[]>{
+    return this.api.getSearch();
+  }
+
+  // Simulate GET /bucketlists
   getNext(): Observable<Bucket[]> {
     return this.api.getNext();
   }

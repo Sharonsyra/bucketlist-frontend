@@ -59,6 +59,16 @@ export class ApiService {
     .catch(this.handleError);
   }
 
+  // API: GET /bucketlists
+  public getSearch(){
+    return this.http
+    .get("http://127.0.0.1:5000/api/v1.0/bucketlists/" + <string>name, {"headers" : this.headers})
+    .map(response => {
+      return new Bucket(response.json());
+    })
+    .catch(this.handleError)
+  }
+
   //API: GET /page
   public getNext(){
     return this.http
