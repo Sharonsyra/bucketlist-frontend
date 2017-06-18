@@ -2,8 +2,6 @@ import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import {Router} from '@angular/router'
 
 import {Bucket} from './bucket';
-import {Item} from '../bucket-list-item/item';
-import {ItemService} from '../bucket-list-item/item.service'
 
 import { BucketService } from './bucket.service';
 
@@ -29,9 +27,9 @@ export class BucketListComponent implements OnInit{
 
   editName: string = "";
 
-  items: Item[] = [];
-
   token: string = ""
+
+  searchTerm: string = ""
 
   constructor(private bucketService: BucketService, private router: Router) {
   }  
@@ -72,11 +70,8 @@ export class BucketListComponent implements OnInit{
     }
 
   onGetBucket(bucketId){
-    this.bucketService.getBucketById(bucketId).subscribe(
-      (singleBucket) => {
-        let bucket = this.buckets.filter((t) => t.id == bucketId)[0];
-      })
-    }
+    this.router.navigate(['/bucketlist'], { queryParams: { bucketId: bucketId } })
+  }
 
   onUpdateBucket(name, bucketId) {
     this.bucketService
@@ -117,10 +112,12 @@ export class BucketListComponent implements OnInit{
   });
   }
 
-  onSearch(name){
-    this.bucketService.getAllBuckets().subscribe(
-      (searchBucket) => {
-        let bucket = this.buckets.filter((t) => t.name == name)[0]
+  onSearch(searchTerm){
+    this.bucketService.getSearch().subscribe(response => {
+        // this.buckets = response.filter((t) => t.name === searchTerm)
+        let buckets = response["bucketlists"].bucketlists.filter((t) => t.name === searchTerm)
+        console.log(buckets)
+        console.log(response)
       });    
   }
 

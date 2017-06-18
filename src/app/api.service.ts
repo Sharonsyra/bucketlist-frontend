@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Http, Response, Headers } from '@angular/http';
+import {Router} from '@angular/router'
+
 import {Bucket} from './bucket-list/bucket';
-import {Item} from './bucket-list-item/item';
+import {Item} from './bucket/item';
 import {User} from './user/user';
 
 import { Observable } from 'rxjs/Observable';
@@ -14,7 +16,7 @@ import 'rxjs/add/observable/throw';
 export class ApiService {
     headers : any;
   constructor(
-    private http: Http
+    private http: Http, private router: Router
   ) {
       this.headers = new Headers();
       this.headers.append('Access-Control-Allow-Origin', '*')
@@ -59,12 +61,12 @@ export class ApiService {
     .catch(this.handleError);
   }
 
-  // API: GET /bucketlists
+  // API: GET /bucketlists/name
   public getSearch(){
     return this.http
-    .get("http://127.0.0.1:5000/api/v1.0/bucketlists/" + <string>name, {"headers" : this.headers})
+    .get("http://127.0.0.1:5000/api/v1.0/bucketlists/" + "?q=" + <string>name, {"headers" : this.headers})
     .map(response => {
-      return new Bucket(response.json());
+      return (response.json());
     })
     .catch(this.handleError)
   }
@@ -104,6 +106,7 @@ export class ApiService {
 
   // API: GET /bucketlists/:id
   public getBucketById(bucketId){
+    this.authKey()
     return this.http
     .get("http://127.0.0.1:5000/api/v1.0/bucketlists/" + <string>bucketId, {"headers": this.headers})
     .map(response => {
@@ -142,7 +145,7 @@ export class ApiService {
   }
 
   // API: POST /bucketlists/:id/items
-  public createItem(name, bucketId) {
+  public createItem(bucketId, name) {
   return this.http
     .post("http://127.0.0.1:5000/api/v1.0/bucketlists/" + <string>bucketId + "/items/", JSON.stringify({"name": name}), {"headers" : this.headers})
     .map(response => {
@@ -152,7 +155,7 @@ export class ApiService {
   }
 
   // API: PUT /bucketlists/:id/items/
-  public updateItem(name, bucketId, itemId){
+  public updateItem(bucketId, name, itemId){
   return this.http
     .put("http://127.0.0.1:5000/api/v1.0/bucketlists/" + <string>bucketId + "/items/" + <string>itemId, JSON.stringify({"name": name}), {"headers" : this.headers})
     .map(response => {
@@ -169,8 +172,11 @@ export class ApiService {
     .catch(this.handleError);
   }
 
-  private handleError (error: Response | any) {
-	  console.error('ApiService::handleError', error);
+  public handleError (error: Response | any, router) {
+	  if(error.status === 401){
+        window.location.href = '/users'
+      }
+     console.error('ApiService::handleError', error);
     alert(error);
 	  return Observable.throw(error);
 }

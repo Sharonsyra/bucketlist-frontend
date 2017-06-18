@@ -13,6 +13,7 @@ import { ItemService } from './bucket-list-item/item.service';
 import { ApiService } from './api.service';
 import { UserComponent } from './user/user.component';
 import { HomeComponent } from './home/home.component';
+import { BucketComponent } from './bucket/bucket.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { HomeComponent } from './home/home.component';
     BucketListComponent,
     BucketListItemComponent,
     UserComponent,
-    HomeComponent
+    HomeComponent,
+    BucketComponent
   ],
   imports: [
     BrowserModule,
@@ -29,8 +31,8 @@ import { HomeComponent } from './home/home.component';
     RouterModule.forRoot([
       { path: 'bucketlists', component: BucketListComponent },
       { path: 'users', component: UserComponent},
-      { path: '', component: HomeComponent },
-      {path: 'Bucketlist', component: BucketListItemComponent}
+      { path: 'bucketlist', component: BucketComponent },
+      { path: '', component: HomeComponent }
       ])
   ],
   providers: [BucketService, ApiService, UserService, ItemService],

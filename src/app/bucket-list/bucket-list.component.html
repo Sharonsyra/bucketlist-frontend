@@ -4,7 +4,7 @@
           <form>
             <div class="input-field">
               <input id="search" type="search" required>
-              <label class="label-icon" for="search"><i class="material-icons" (click)="onSearch()">search</i></label>
+              <label class="label-icon" for="search"><i class="material-icons" (click)="onSearch(searchTerm)">search</i></label>
               <i class="material-icons">close</i>
             </div>
           </form>
@@ -24,37 +24,20 @@
     <ul class="bucket-list">
         <div class="row">
         <li *ngFor="let bucket of buckets">
-        <a href="" (click)="onGetBucket(bucket.id)">
         <div class="col s12 m6 l8">
           <div class="card">
             <div class="card-content black-text">
-              <span class="card-title"><a class="btn" (click)="onGetBucket(bucketId)">{{bucket.name}}</a></span>
+              <span class="card-title"><button (click)="onGetBucket(bucket.id)">{{bucket.name}}</button></span>
             </div>
-            <div class="card-action">
-              <button class="update">Edit</button>
-              <button class="destroy">Delete</button>
-            </div>
-            <!-- <div class="card-content">
-              <span>
-                <ul class="items">
-                  <h4 class="red-text darken-4"><button (click)="onGetBucket">Items</button></h4>
-                  <li *ngFor="let item of bucket.items">
-                    <label class="red-text">{{item.name}}</label>
-                  </li>
-                </ul>
-                <label class="">{{bucket.date_created}}</label><br>
-                <label class="">{{bucket.date_modified}}</label>
-              </span>
-            </div>
+
             <div class="card-action">
                 <input class="update" [(ngModel)] = "editName" *ngIf="editMode&&selectedId">
                 <button class="update"  *ngIf="!editMode" (click)="editMode=true;">Edit</button>
                 <button class="update"  *ngIf="editMode" (click)="onUpdateBucket(editName, bucket.id)"> Submit </button>
-                <button class="destroy right" (click)="onRemoveBucket(bucket.id)">Delete</button>
-            </div> -->
+                <button class="destroy right" (click)="onRemoveBucket(bucket.id)">Delete</button> 
+            </div>
           </div>
         </div>
-      </a>
       </li>
       </div>            
     </ul>

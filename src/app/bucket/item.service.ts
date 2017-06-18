@@ -11,24 +11,18 @@ export class ItemService {
     ) {
     }
 
-  // Simulate POST /bucketlists/:id/items/
-  addItem(name, bucketId) {
+  // Simulate POST /bucketlists/bucketId/items/
+  addItem(bucketId, name) {
     return this.api.createItem(name, bucketId);
   }
 
-  // Simulate DELETE /bucketlists/:id/items/:id
+  // Simulate DELETE /bucketlists/bucketId/items/itemId
   deleteItemById(bucketId, itemId) {
     return this.api.deleteItem(bucketId, itemId);
   }
 
-  // Simulate PUT /bucketlists/:id/items/:id
-  updateBucket(name, bucketId, itemId) {
-    return this.api.updateItem(name, bucketId, itemId);
+  // Simulate PUT /bucketlists/bucketId/items/itemId
+  updateItem(bucketId, name, itemId) {
+    return this.api.updateItem(bucketId, name, itemId);
   }
-
-  // Simulate GET /bucketlists/:id/items/
-  getAllItems(bucketId): Observable<Item[]> {
-    return this.api.getAllItems(bucketId);
-  }
-
 }
