@@ -24,15 +24,20 @@
 </div>
 
 <section class="main" *ngIf="bucket.items.length > 0">
+  <div class="col s12 m12 l12">
+      <span>
+        <h2>Items</h2>
+      </span>
+    </div>
   <div class="col s12 m6 l8">
     <ul class="items-list">
         <li *ngFor="let item of bucket.items">
           <div class="card">
             <div class="card-content black-text">
-              <span class="card-title"><button (click)="onGetBucket(bucket.id)">{{item.name}}</button></span>
+              <span class="card-title">{{item.name}}</span>
             </div>
 
-            <div class="card-action">
+            <div class="">
                 <input class="update" [(ngModel)] = "editName" *ngIf="editMode&&selectedId===item.id">
                 <button class="update"  *ngIf="!editMode" (click)="editMode=true;selectedId=item.id"><i class="material-icons">mode_edit</i></button>
                 <button class="update"  *ngIf="editMode" (click)="onUpdateItem(bucket.id, editName, item.id)"> Submit </button>
@@ -123,8 +128,8 @@
             </div>
           </div>
         </div>
-  <div class="footer-copywright">
-    <div class="container">
+  <div class="footer-copywright white-text">
+    <div class="container center">
     © 2017 Copyright Text
     </div>
   </div>

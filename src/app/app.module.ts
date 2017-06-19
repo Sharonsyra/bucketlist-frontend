@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import {RouterModule} from '@angular/router'
+import { SimpleNotificationsModule } from 'angular2-notifications';
 
 import { AppComponent } from './app.component';
 import { BucketService } from './bucket-list/bucket.service';
@@ -26,6 +27,7 @@ import { BucketComponent } from './bucket/bucket.component';
     BrowserModule,
     FormsModule,
     HttpModule,
+    SimpleNotificationsModule.forRoot(),
     RouterModule.forRoot([
       { path: 'bucketlists', component: BucketListComponent },
       { path: 'users', component: UserComponent},

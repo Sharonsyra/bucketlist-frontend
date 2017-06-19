@@ -1,18 +1,30 @@
   <header style="padding-bottom: 50px;">
-    <div class="nav-wrapper">
-      <nav class="blue">
+    
+      <div class="nav-wrapper">
+       <nav class="blue">
+        <div class="row">
           <form>
-            <div class="input-field">
+            <div class="input-field col s10 l10" style="width: 80%; height: 64px;">
               <input id="search" name="searchTerm" type="search" [(ngModel)]= "searchTerm" required>
-              <label class="label-icon" for="search"><i class="material-icons" (click)="onSearch(searchTerm)">search</i></label>
+              <label class="label-icon" for="search"></label>
               <i class="material-icons">close</i>
+              <!-- <a class="btn" style="float: right;" (click)="onSearch(searchTerm)">search</a> -->
+            </div>
+            
+            <div class="col l1 s1">
+              <i class="material-icons" style="float: right;" (click)="onSearch(searchTerm)">search</i>
             </div>
           </form>
-          <a class="waves-effect waves-light btn right cyan" (click)="logOut()">LogOut</a>
-      </nav>
-      <h3 class="text-muted center">Bucketee</h3>
-    </div>
+          
+          <div class="col l1 s1">
+            <a class="waves-effect waves-light btn right cyan" (click)="logOut()">LogOut</a>
+          </div>
+          </div>
+        </nav>
+      </div>
+    
   </header> 
+  <h3 class="text-muted center">Bucketee</h3>
 
 <div class="container" style="padding: 50px;">
 
@@ -30,10 +42,10 @@
         <li *ngFor="let bucket of buckets">
           <div class="card">
             <div class="card-content black-text">
-              <span class="card-title"><button (click)="onGetBucket(bucket.id)">{{bucket.name}}</button></span>
+              <span class="card-title"><a (click)="onGetBucket(bucket.id)">{{bucket.name}}</a></span>
             </div>
 
-            <div class="card-action">
+            <div class="">
               <input class="update" [(ngModel)] = "editName" *ngIf="editMode&&selectedId===bucket.id">
               <button class="update"  *ngIf="!editMode" (click)="editMode=true;selectedId=bucket.id"><i class="material-icons">mode_edit</i></button>
               <button class="update"  *ngIf="editMode" (click)="onUpdateBucket(editName, bucket.id)"> Submit </button>
@@ -48,7 +60,7 @@
                 <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Modal Header</h4>
+                    <h4 class="modal-title">Delete</h4>
                   </div>
                   <div class="modal-body">
                     <p>Are you sure you want to delete?</p>
@@ -118,9 +130,6 @@
         <a class="waves-effect waves-light btn cyan" (click)="onPrevious()">
         <i class="material-icons">chevron_left</i></a>
         </li>
-        <li class="waves-effect"><a href="#">1</a></li>
-        <li class="waves-effect"><a href="#">2</a></li>
-        <li class="waves-effect"><a href="#">3</a></li>
         <li *ngIf="next">
         <a class="waves-effect waves-light btn cyan" (click)="onNext()">
         <i class="material-icons">chevron_right</i></a>
@@ -144,8 +153,8 @@
       </div>
     </div>
   </div>
-  <div class="footer-copywright">
-    <div class="container">
+  <div class="footer-copywright white-text">
+    <div class="container center">
     © 2017 Copyright Text
     </div>
   </div>

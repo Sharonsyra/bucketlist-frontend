@@ -32,8 +32,8 @@ export class BucketService {
   }
 
   // Simulate GET /bucketlists
-  getSearch(){
-    return this.api.getSearch();
+  getSearch(name){
+    return this.api.getSearch(name);
   }
 
   // Simulate GET /bucketlists

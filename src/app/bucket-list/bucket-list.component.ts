@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import {Router} from '@angular/router'
+import { NotificationsService } from 'angular2-notifications';
 
 import {Bucket} from './bucket';
 
@@ -31,7 +32,10 @@ export class BucketListComponent implements OnInit{
 
   searchTerm: string = ""
 
-  constructor(private bucketService: BucketService, private router: Router) {
+  constructor(private bucketService: BucketService, 
+    private router: Router,
+    private service: NotificationsService
+    ) {
   }  
 
   ngOnInit() {
@@ -42,6 +46,16 @@ export class BucketListComponent implements OnInit{
         this.buckets = response.bucketlists;
         this.previous = response.previous_page;
         this.next = response.next_page;
+        this.service.success(
+          'Success',
+          "BucketLists Loaded Successfully!",
+    {
+        timeOut: 5000,
+        showProgressBar: true,
+        pauseOnHover: false,
+        clickToClose: false,
+        maxLength: 50
+    })
       }
     });     
     }
@@ -54,9 +68,20 @@ export class BucketListComponent implements OnInit{
     if (name){
       this.buckets.forEach(bucketlist => {
         if (bucketlist.name === name) {
-          alert('Bucketlist already exists!');
+          this.service.error(
+          'Error',
+          "BucketList Already exists!",
+    {
+        timeOut: 5000,
+        showProgressBar: true,
+        pauseOnHover: false,
+        clickToClose: false,
+        maxLength: 50
+    }
+)
         }
       });
+
     this.bucketService
     .addBucket(name)
     .subscribe(
@@ -64,12 +89,49 @@ export class BucketListComponent implements OnInit{
         if (newBucket) {
           this.buckets = this.buckets.concat(newBucket);
           this.ngOnInit();
-        } else {
-          console.log('error');
+          this.service.success(
+          'Success!',
+          "Bucketlist created!",
+    {
+        timeOut: 5000,
+        showProgressBar: true,
+        pauseOnHover: false,
+        clickToClose: false,
+        maxLength: 50
+    }
+)
+        } 
+        else 
+        {
+          this.service.error(
+          'Error!',
+          "Error occured!",
+    {
+        timeOut: 5000,
+        showProgressBar: true,
+        pauseOnHover: false,
+        clickToClose: false,
+        maxLength: 50
+    }
+)    
         }
       }
     )
     }
+    else{
+      this.service.info(
+          'Alert',
+          "Please Enter name!",
+    {
+        timeOut: 5000,
+        showProgressBar: true,
+        pauseOnHover: false,
+        clickToClose: false,
+        maxLength: 50
+    }
+    )
+    }
+
     }
 
   onGetBucket(bucketId){
@@ -85,6 +147,17 @@ export class BucketListComponent implements OnInit{
         bucket.name = name
         this.editMode = false;
         this.selectedId = bucketId;
+        this.service.success(
+          'Success',
+          "BucketList Updated successfully!",
+    {
+        timeOut: 5000,
+        showProgressBar: true,
+        pauseOnHover: false,
+        clickToClose: false,
+        maxLength: 50
+    }
+)
       }
     );
   }
@@ -95,6 +168,17 @@ export class BucketListComponent implements OnInit{
     .subscribe(
       (_) => {
         this.buckets = this.buckets.filter((t) => t.id !== bucketId);
+        this.service.success(
+          'Success',
+          "BucketList Deleted successfully!",
+    {
+        timeOut: 5000,
+        showProgressBar: true,
+        pauseOnHover: false,
+        clickToClose: false,
+        maxLength: 50
+    }
+)
       }
     );
   }
@@ -120,8 +204,18 @@ export class BucketListComponent implements OnInit{
   }
 
   onSearch(searchTerm){
-    this.bucketService.getSearch().subscribe(response => {
-        this.buckets = response["bucketlists"].filter((t) => t.name === searchTerm)
+    this.bucketService.getSearch(searchTerm).subscribe(response => {
+        this.buckets = response.bucketlists
+        this.service.success(
+          'Success',
+          "Search Results!",
+    {
+        timeOut: 5000,
+        showProgressBar: true,
+        pauseOnHover: false,
+        clickToClose: false,
+        maxLength: 50
+    })
       });    
   }
 
@@ -129,6 +223,16 @@ export class BucketListComponent implements OnInit{
       this.token = null;
       localStorage.removeItem("token");
       this.router.navigate(['users']);
+      this.service.success(
+          'Success',
+          "User Logged Out Successfully!",
+    {
+        timeOut: 5000,
+        showProgressBar: true,
+        pauseOnHover: false,
+        clickToClose: false,
+        maxLength: 50
+    })
     }
  
 }
