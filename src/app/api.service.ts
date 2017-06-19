@@ -56,7 +56,7 @@ export class ApiService {
     .get("http://127.0.0.1:5000/api/v1.0/bucketlists/", {"headers" : this.headers})
     .map(response => {
       const buckets = response.json();
-      return buckets.bucketlists;
+      return buckets;
     })
     .catch(this.handleError);
   }
@@ -72,23 +72,23 @@ export class ApiService {
   }
 
   //API: GET /page
-  public getNext(){
+  public getNext(next){
     return this.http
-    .get("http://127.0.0.1:5000/api/v1.0/bucketlists/", {"headers" : this.headers})
+    .get(next, {"headers" : this.headers})
     .map(response => {
       const buckets = response.json();
-      return buckets.bucketlists.nextpage;
+      return buckets;
     })
     .catch(this.handleError);
   }
 
   //API: GET /page
-  public getPrevious(){
+  public getPrevious(previous){
     return this.http
-    .get("http://127.0.0.1:5000/api/v1.0/bucketlists/", {"headers" : this.headers})
+    .get(previous, {"headers" : this.headers})
     .map(response => {
       const buckets = response.json();
-      return buckets.bucketlists.previouspage;
+      return buckets;
     })
     .catch(this.handleError);
   }

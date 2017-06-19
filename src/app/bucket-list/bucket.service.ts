@@ -27,23 +27,23 @@ export class BucketService {
   }
 
   // Simulate GET /bucketlists
-  getAllBuckets(): Observable<Bucket[]> {
+  getAllBuckets(){
     return this.api.getAllBuckets();
   }
 
   // Simulate GET /bucketlists
-  getSearch(): Observable<Bucket[]>{
+  getSearch(){
     return this.api.getSearch();
   }
 
   // Simulate GET /bucketlists
-  getNext(): Observable<Bucket[]> {
-    return this.api.getNext();
+  getNext(next){
+    return this.api.getNext(next);
   }
 
   // Simulate GET /bucketlists
-  getPrevious(): Observable<Bucket[]> {
-    return this.api.getPrevious();
+  getPrevious(previous){
+    return this.api.getPrevious(previous);
   }
 
   // Simulate GET /bucketlists/:id

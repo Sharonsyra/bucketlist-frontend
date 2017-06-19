@@ -14,17 +14,19 @@ import { Item } from './item'
 })
 export class BucketComponent implements OnInit {
 
-  bucketId : number
-
-  bucket: Bucket = new Bucket
-
-  token: string = ""
-
-  items: Item[] = [];
-
   editMode : boolean = false;
 
   selectedId : number;
+
+  editName: string = "";
+
+  bucketId : number;
+
+  bucket: Bucket = new Bucket;
+
+  token: string = "";
+
+  items: Item[] = [];
 
   constructor(
     private itemService: ItemService, 
@@ -68,12 +70,12 @@ export class BucketComponent implements OnInit {
     )
     }
 
-  onUpdateItem(bucketId, itemId, name){
+  onUpdateItem(bucketId, name, itemId){
     this.itemService
-    .updateItem(this.bucketId, itemId, name)
+    .updateItem(this.bucketId, name, itemId)
     .subscribe(
       (updateItem) => {
-        let item = this.items.filter((t) => t.id == itemId)[0];
+        let item = this.bucket.items.filter((t) => t.id == itemId)[0];
         item.name = name
         this.editMode = false;
         this.selectedId = itemId;

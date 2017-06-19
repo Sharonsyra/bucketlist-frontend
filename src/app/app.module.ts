@@ -7,9 +7,8 @@ import {RouterModule} from '@angular/router'
 import { AppComponent } from './app.component';
 import { BucketService } from './bucket-list/bucket.service';
 import { BucketListComponent } from './bucket-list/bucket-list.component';
-import { BucketListItemComponent } from './bucket-list-item/bucket-list-item.component';
 import { UserService } from './user/user.service';
-import { ItemService } from './bucket-list-item/item.service';
+import { ItemService } from './bucket/item.service';
 import { ApiService } from './api.service';
 import { UserComponent } from './user/user.component';
 import { HomeComponent } from './home/home.component';
@@ -19,7 +18,6 @@ import { BucketComponent } from './bucket/bucket.component';
   declarations: [
     AppComponent,
     BucketListComponent,
-    BucketListItemComponent,
     UserComponent,
     HomeComponent,
     BucketComponent

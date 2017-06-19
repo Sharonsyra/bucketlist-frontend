@@ -17,15 +17,15 @@ export class BucketListComponent implements OnInit{
 
   selectedId : number;
 
+  editName: string = "";
+
   name : string = "";
   
-  nexturl : string = "";
+  next : string = "";
 
-  previousurl : string = "";
+  previous : string = "";
 
   buckets = [];
-
-  editName: string = "";
 
   token: string = ""
 
@@ -39,7 +39,9 @@ export class BucketListComponent implements OnInit{
     if (this.token) {
       this.bucketService.getAllBuckets().subscribe(response => {
       if(response){
-        this.buckets = response
+        this.buckets = response.bucketlists;
+        this.previous = response.previous_page;
+        this.next = response.next_page;
       }
     });     
     }
@@ -61,6 +63,7 @@ export class BucketListComponent implements OnInit{
       (newBucket) => {
         if (newBucket) {
           this.buckets = this.buckets.concat(newBucket);
+          this.ngOnInit();
         } else {
           console.log('error');
         }
@@ -97,27 +100,28 @@ export class BucketListComponent implements OnInit{
   }
 
   onNext(){
-    this.bucketService.getNext().subscribe(response  => {
+    this.bucketService.getNext(this.next).subscribe(response  => {
     if(response){
-      this.buckets = response
+      this.buckets = response.bucketlists
+      this.previous = response.previous_page;
+      this.next = response.next_page;
     }
   });
   }
 
   onPrevious(){
-    this.bucketService.getPrevious().subscribe(response  => {
+    this.bucketService.getPrevious(this.previous).subscribe(response  => {
     if(response){
-      this.buckets = response
+      this.buckets = response.bucketlists
+      this.previous = response.previous_page;
+      this.next = response.next_page;
     }
   });
   }
 
   onSearch(searchTerm){
     this.bucketService.getSearch().subscribe(response => {
-        // this.buckets = response.filter((t) => t.name === searchTerm)
-        let buckets = response["bucketlists"].bucketlists.filter((t) => t.name === searchTerm)
-        console.log(buckets)
-        console.log(response)
+        this.buckets = response["bucketlists"].filter((t) => t.name === searchTerm)
       });    
   }
 

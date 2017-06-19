@@ -1,4 +1,4 @@
-import {Item} from '../bucket-list-item/item';
+import {Item} from '../bucket/item';
 
 export class Bucket {
 	id: number;

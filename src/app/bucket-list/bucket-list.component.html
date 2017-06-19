@@ -1,9 +1,9 @@
-  <header>
+  <header style="padding-bottom: 50px;">
     <div class="nav-wrapper">
       <nav class="blue">
           <form>
             <div class="input-field">
-              <input id="search" type="search" required>
+              <input id="search" name="searchTerm" type="search" [(ngModel)]= "searchTerm" required>
               <label class="label-icon" for="search"><i class="material-icons" (click)="onSearch(searchTerm)">search</i></label>
               <i class="material-icons">close</i>
             </div>
@@ -14,51 +14,123 @@
     </div>
   </header> 
 
-  <div>
-    <label>New Bucket</label><br>
-   	<input [(ngModel)] = "name">
+<div class="container" style="padding: 50px;">
+
+<div class="row">
+
+  <div class="col s12 m6 l8" style="padding-bottom: 50px;">
+    <h2><label>New Bucket</label></h2>
+    <input [(ngModel)] = "name">
     <button class="create cyan" (click)="onAddBucket(name)">Submit</button>
   </div>
-  <div class="container">
+
   <section class="main" *ngIf="buckets.length > 0">
+  <div class="col s12 m6 l8">
     <ul class="bucket-list">
-        <div class="row">
         <li *ngFor="let bucket of buckets">
-        <div class="col s12 m6 l8">
           <div class="card">
             <div class="card-content black-text">
               <span class="card-title"><button (click)="onGetBucket(bucket.id)">{{bucket.name}}</button></span>
             </div>
 
             <div class="card-action">
-                <input class="update" [(ngModel)] = "editName" *ngIf="editMode&&selectedId">
-                <button class="update"  *ngIf="!editMode" (click)="editMode=true;">Edit</button>
-                <button class="update"  *ngIf="editMode" (click)="onUpdateBucket(editName, bucket.id)"> Submit </button>
-                <button class="destroy right" (click)="onRemoveBucket(bucket.id)">Delete</button> 
+              <input class="update" [(ngModel)] = "editName" *ngIf="editMode&&selectedId===bucket.id">
+              <button class="update"  *ngIf="!editMode" (click)="editMode=true;selectedId=bucket.id"><i class="material-icons">mode_edit</i></button>
+              <button class="update"  *ngIf="editMode" (click)="onUpdateBucket(editName, bucket.id)"> Submit </button>
+              <button class="destroy right" data-toggle="modal" data-target="#myModal"><i class="material-icons">delete</i></button> 
+            </div>
+
+            <div>
+              
+            <div id="myModal" class="modal fade transparent" style="box-shadow: 0px 0px 0px 0px" role="dialog">
+              <div class="modal-dialog">
+
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Modal Header</h4>
+                  </div>
+                  <div class="modal-body">
+                    <p>Are you sure you want to delete?</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onRemoveBucket(bucket.id)">Delete</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
             </div>
           </div>
-        </div>
       </li>
-      </div>            
     </ul>
-  </section>
   </div>
-        
-  <div class="container">
-  <ul class="pagination">
-    <li class="disabled">
-    <a class="waves-effect waves-light btn cyan" (click)="onPrevious()">
-    <i class="material-icons">chevron_left</i></a></li>
-    <li class="waves-effect"><a href="#">1</a></li>
-    <li class="waves-effect"><a href="#">2</a></li>
-    <li class="waves-effect"><a href="#">3</a></li>
-    <li>
-    <a class="waves-effect waves-light btn cyan" (click)="onNext()">
-    <i class="material-icons">chevron_right</i></a></li>
-  </ul>
+  </section>
+
+  <div class="col s12 m6 l4 offset-s4 right row">
+    <div class="card cyan">
+      <div class="card-content">
+        <span class="card-title">
+          <p>Suggested goals!</p>
+        </span>
+      </div>
+    </div>
+    <div class="card cyan">
+        <div class="card-image">
+          <img src="../../assets/images/travel.jpeg">
+          <span class="card-title">Travel</span>
+          <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
+        </div>
+        <div class="card-content">
+          <p>Go to Malibu.</p>
+        </div>
+    </div>
+    <div class="card cyan">
+        <div class="card-image">
+          <img src="../../assets/images/ziplining.jpeg">
+          <span class="card-title">Zip Lining</span>
+          <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
+        </div>
+        <div class="card-content">
+          <p>Go Zip Lining</p>
+        </div>
+    </div>
+    <div class="card cyan">
+        <div class="card-image">
+          <img src="../../assets/images/skydiving.jpeg">
+          <span class="card-title">Sky Diving</span>
+          <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
+        </div>
+        <div class="card-content">
+          <p>Go Sky Diving</p>
+        </div>
+    </div>
   </div>
 
-<footer class="page-footer blue">
+</div>
+
+<div class="row center">
+  <div class="pagination">
+      <ul class="pagination">
+        <li *ngIf="previous">
+        <a class="waves-effect waves-light btn cyan" (click)="onPrevious()">
+        <i class="material-icons">chevron_left</i></a>
+        </li>
+        <li class="waves-effect"><a href="#">1</a></li>
+        <li class="waves-effect"><a href="#">2</a></li>
+        <li class="waves-effect"><a href="#">3</a></li>
+        <li *ngIf="next">
+        <a class="waves-effect waves-light btn cyan" (click)="onNext()">
+        <i class="material-icons">chevron_right</i></a>
+        </li>
+      </ul>
+    </div>
+</div>  
+</div>           
+
+<footer class="page-footer blue" style="padding-top: 50px;">
   <div class="container">
     <div class="row">
       <div class="col l6 s12">

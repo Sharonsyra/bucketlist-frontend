@@ -4,7 +4,8 @@
 	    <div class="nav-wrapper">
 	      <ul id="nav-mobile" class="right hide-on-med-and-down">       
           <li>
-          <a class="waves-effect waves-light btn right cyan" (click)="logOut()">LogOut</a>
+          <a class="waves-effect waves-light btn cyan" href="/bucketlists">All BucketLists</a>
+          <a class="waves-effect waves-light btn cyan" (click)="logOut()">LogOut</a>
 	        </li>
 	      </ul>
 	    </div>
@@ -12,35 +13,101 @@
     </div>
   </header> 
 
-  <div>
-    <label>New Item</label><br>
-    <input [(ngModel)] = "name">
-    <button class="create cyan" (click)="onAddItem(bucketId, name)">Submit</button>
-  </div>
+<div class="container">
 
+<div class="row">
+
+<div class="col s12 m6 l8" style="padding-bottom: 50px;">
+  <h2><label>New Item</label></h2>
+  <input [(ngModel)] = "name">
+  <button class="create cyan" (click)="onAddItem(bucketId, name)">Submit</button>
+</div>
 
 <section class="main" *ngIf="bucket.items.length > 0">
+  <div class="col s12 m6 l8">
     <ul class="items-list">
-        <div class="row">
         <li *ngFor="let item of bucket.items">
-        <div class="col s12 m6 l8">
           <div class="card">
             <div class="card-content black-text">
               <span class="card-title"><button (click)="onGetBucket(bucket.id)">{{item.name}}</button></span>
             </div>
 
             <div class="card-action">
-                <input class="update" [(ngModel)] = "editName" *ngIf="editMode&&selectedId">
-                <button class="update"  *ngIf="!editMode" (click)="editMode=true;">Edit</button>
+                <input class="update" [(ngModel)] = "editName" *ngIf="editMode&&selectedId===item.id">
+                <button class="update"  *ngIf="!editMode" (click)="editMode=true;selectedId=item.id"><i class="material-icons">mode_edit</i></button>
                 <button class="update"  *ngIf="editMode" (click)="onUpdateItem(bucket.id, editName, item.id)"> Submit </button>
-                <button class="destroy right" (click)="onRemoveItem(bucket.id, item.id)">Delete</button> 
+                <button class="destroy right" data-toggle="modal" data-target="#myModal"><i class="material-icons">delete</i></button> 
+            </div>
+
+            <div>
+              <div id="myModal" class="modal fade transparent" style="box-shadow: 0px 0px 0px 0px" role="dialog">
+              <div class="modal-dialog">
+
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Modal Header</h4>
+                  </div>
+                  <div class="modal-body">
+                    <p>Are you sure you want to delete?</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onRemoveItem(bucket.id, item.id)">Delete</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
             </div>
           </div>
-        </div>
       </li>
-      </div>            
     </ul>
-  </section>
+  </div>
+</section>
+
+<div class="col s12 m6 l4 offset-s4 right row">
+    <div class="card cyan">
+      <div class="card-content">
+        <span class="card-title">
+          <p>Suggested goals!</p>
+        </span>
+      </div>
+    </div>
+    <div class="card cyan">
+        <div class="card-image">
+          <img src="../../assets/images/travel.jpeg">
+          <span class="card-title">Travel</span>
+          <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
+        </div>
+        <div class="card-content">
+          <p>Go to Malibu.</p>
+        </div>
+    </div>
+    <div class="card cyan">
+        <div class="card-image">
+          <img src="../../assets/images/ziplining.jpeg">
+          <span class="card-title">Zip Lining</span>
+          <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
+        </div>
+        <div class="card-content">
+          <p>Go Zip Lining</p>
+        </div>
+    </div>
+    <div class="card cyan">
+        <div class="card-image">
+          <img src="../../assets/images/skydiving.jpeg">
+          <span class="card-title">Sky Diving</span>
+          <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
+        </div>
+        <div class="card-content">
+          <p>Go Sky Diving</p>
+        </div>
+    </div>
+  </div>
+
+</div>
+</div>
 
 <footer class="page-footer blue">
    <div class="container">
