@@ -18,7 +18,7 @@
 <div class="row">
 
 <div class="col s12 m6 l8" style="padding-bottom: 50px;">
-  <h2><label>New Item</label></h2>
+  <h1><label>New Item</label></h1>
   <input [(ngModel)] = "name">
   <button class="create cyan" (click)="onAddItem(bucketId, name)">Submit</button>
 </div>
@@ -26,22 +26,22 @@
 <section class="main" *ngIf="bucket.items.length > 0">
   <div class="col s12 m12 l12">
       <span>
-        <h2>Items</h2>
+        <h2 class="center cyan" style="padding: 50px;">Items</h2>
       </span>
     </div>
   <div class="col s12 m6 l8">
     <ul class="items-list">
         <li *ngFor="let item of bucket.items">
-          <div class="card">
+          <div class="card" style="padding: 50px;">
             <div class="card-content black-text">
               <span class="card-title">{{item.name}}</span>
             </div>
 
-            <div class="">
-                <input class="update" [(ngModel)] = "editName" *ngIf="editMode&&selectedId===item.id">
-                <button class="update"  *ngIf="!editMode" (click)="editMode=true;selectedId=item.id"><i class="material-icons">mode_edit</i></button>
-                <button class="update"  *ngIf="editMode" (click)="onUpdateItem(bucket.id, editName, item.id)"> Submit </button>
+            <div class="card-action">
                 <button class="destroy right" data-toggle="modal" data-target="#myModal"><i class="material-icons">delete</i></button> 
+                <input class="update" [(ngModel)] = "editName" *ngIf="editMode&&selectedId===item.id">
+                <button class="update right"  *ngIf="!editMode" (click)="editMode=true;selectedId=item.id"><i class="material-icons">mode_edit</i></button>
+                <button class="update"  *ngIf="editMode" (click)="onUpdateItem(bucket.id, editName, item.id)"> Submit </button>
             </div>
 
             <div>

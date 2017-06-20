@@ -40,16 +40,16 @@
   <div class="col s12 m6 l8">
     <ul class="bucket-list">
         <li *ngFor="let bucket of buckets">
-          <div class="card">
+          <div class="card" style="padding: 50px;">
             <div class="card-content black-text">
               <span class="card-title"><a (click)="onGetBucket(bucket.id)">{{bucket.name}}</a></span>
             </div>
 
-            <div class="">
-              <input class="update" [(ngModel)] = "editName" *ngIf="editMode&&selectedId===bucket.id">
-              <button class="update"  *ngIf="!editMode" (click)="editMode=true;selectedId=bucket.id"><i class="material-icons">mode_edit</i></button>
-              <button class="update"  *ngIf="editMode" (click)="onUpdateBucket(editName, bucket.id)"> Submit </button>
+            <div class="card-action">
               <button class="destroy right" data-toggle="modal" data-target="#myModal"><i class="material-icons">delete</i></button> 
+              <input class="update" [(ngModel)] = "editName" *ngIf="editMode&&selectedId===bucket.id">
+              <button class="update right"  *ngIf="!editMode" (click)="editMode=true;selectedId=bucket.id"><i class="material-icons">mode_edit</i></button>
+              <button class="update"  *ngIf="editMode" (click)="onUpdateBucket(editName, bucket.id)"> Submit </button>
             </div>
 
             <div>
